@@ -15,8 +15,8 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity addUser(@RequestBody User user) {
-        String password ="123";
-        if (userService.addUser(user)!=null) {
+        String password = userService.addUser(user);
+        if (password.length()>0) {
             return ResponseEntity.status(HttpStatus.CREATED).body(password);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

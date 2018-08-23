@@ -23,8 +23,7 @@ public class UserRepositoryTest {
 
     @Test
     public void should_return_user_list_when_call_findByUsername(){
-        User savedUser = entityManager.persist(new User("Amelia"));
-        repository.save(savedUser);
+        User savedUser = entityManager.persistFlushFind(new User("Amelia"));
         User user = repository.findByUsername("Amelia");
 
         Assertions.assertThat(user.getUsername()).isEqualTo(savedUser.getUsername());
