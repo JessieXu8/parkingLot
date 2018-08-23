@@ -46,8 +46,19 @@ public class UserControllerTest {
         ResultActions resultActions = mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)));
-        resultActions.andExpect(status().is2xxSuccessful())
-                .andDo(print());
+        resultActions.andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void should_return_status_code_is_4XX_when_add_a_user_failed() throws Exception {
+        User user = mock(User.class);
+
+        when(userService.addUser(any(User.class))).thenReturn(false);
+
+        ResultActions resultActions = mockMvc.perform(post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user)));
+        resultActions.andExpect(status().is4xxClientError());
     }
 }
 
